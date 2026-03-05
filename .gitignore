@@ -11,60 +11,62 @@ __pycache__/
 .venv/
 env/
 venv/
-*.env
 *.egg-info/
 dist/
 build/
+*.log
 
 # Docker
 *.dockerignore
 Dockerfile
 docker-compose.yml
 
-# IDE and Editor
+# Frontend
+build/
+dist/
+*.log
+
+# IDE and Editor files
 .vscode/
 .idea/
-*.sublime-workspace
-*.sublime-project
 *.swp
 *.swo
-*.bak
+*.sublime-workspace
+*.sublime-project
 
-# OS-specific
+# OS-specific files
 .DS_Store
 Thumbs.db
 ehthumbs.db
 Icon?
 Desktop.ini
 
-# Logs and runtime data
-*.log
-*.out
-*.pid
-*.seed
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
-# Build artifacts
-dist/
-build/
-coverage/
+# Test results
 test_results/
-*.tgz
+*.result
+*.xml
+*.json
 
 # Miscellaneous
-*.json
-*.yml
-*.yaml
-*.md
-*.txt
-*.svg
-*.css
-*.html
-*.js
-*.jsx
-*.ts
-*.tsx
-*.map
-*.lock
+*.bak
 *.tmp
-*.cache
+*.temp
+*.orig
+*.pid
+*.seed
+*.sublime-settings
+*.code-workspace
+*.log
 *.tgz
+*.zip
+*.tar
+*.gz
+*.rar
+*.7z

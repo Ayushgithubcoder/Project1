@@ -8,7 +8,7 @@ env:
   AZURE_SUBSCRIPTION_ID: your-subscription-id
   AZURE_RESOURCE_GROUP: project-rg
 jobs:
-  deploy-database-project-cosmos-cb5ebf:
+  deploy-database-project-cosmos-0ee8de:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
@@ -20,8 +20,8 @@ jobs:
     - name: Verify Azure CLI
       run: az --version
     - name: Configure Cosmos DB
-      run: "\n                        # Get connection string\n                        CONNECTION_STRING=$(az cosmosdb keys list --name project-cosmos-cb5ebf --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --type connection-strings --query 'connectionStrings[0].connectionString' -o tsv)\n                        \n                        # Set as GitHub secret (this would need to be done manually)\n                        echo \"Connection string retrieved for project-cosmos-cb5ebf\"\n                        echo \"Please set COSMOSDB_CONNECTION_STRING secret in GitHub repository settings\"\n                    "
-  deploy-backend-project-backend-3b1952:
+      run: "\n                        # Get connection string\n                        CONNECTION_STRING=$(az cosmosdb keys list --name project-cosmos-0ee8de --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --type connection-strings --query 'connectionStrings[0].connectionString' -o tsv)\n                        \n                        # Set as GitHub secret (this would need to be done manually)\n                        echo \"Connection string retrieved for project-cosmos-0ee8de\"\n                        echo \"Please set COSMOSDB_CONNECTION_STRING secret in GitHub repository settings\"\n                    "
+  deploy-backend-project-backend-3e77da:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -44,9 +44,43 @@ jobs:
     - name: Deploy to Azure App Service
       uses: azure/webapps-deploy@v2
       with:
-        app-name: project-backend-3b1952
+        app-name: project-backend-3e77da
         slot-name: production
         package: .
         publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE_BACKEND }}
     - name: Verify Backend Deployment
-      run: curl -f https://project-backend-3b1952.azurewebsites.net/health || curl -f https://project-backend-3b1952.azurewebsites.net/api/health || curl -f https://project-backend-3b1952.azurewebsites.net || echo "Backend endpoint verification failed"
+      run: curl -f https://project-backend-3e77da.azurewebsites.net/health || curl -f https://project-backend-3e77da.azurewebsites.net/api/health || curl -f https://project-backend-3e77da.azurewebsites.net || echo "Backend endpoint verification failed"
+  deploy-frontend-project-frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./frontend
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Login to Azure
+      uses: azure/login@v2
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: npm
+        cache-dependency-path: frontend/package-lock.json
+    - name: Install dependencies
+      run: npm ci
+    - name: Build frontend
+      run: npm run build
+    - name: Set Frontend API URL
+      run: echo "API_URL=https://project-backend-3e77da.azurewebsites.net" >> .env.production
+    - name: Deploy to Azure Static Web Apps
+      uses: Azure/static-web-apps-deploy@v1
+      with:
+        azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+        repo_token: ${{ github.token }}
+        action: upload
+        app_location: frontend
+        output_location: dist
+    - name: Verify Frontend Deployment
+      run: curl -f https://project-frontend.azurestaticapps.net || echo "Frontend endpoint verification failed"
