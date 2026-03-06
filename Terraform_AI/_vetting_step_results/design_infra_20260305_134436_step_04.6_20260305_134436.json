@@ -1,0 +1,65 @@
+{
+  "step_number": 4.6,
+  "step_name": "Update References After Replacement",
+  "success": true,
+  "timestamp": "2026-03-05T13:44:36.757336",
+  "changes": {},
+  "errors": [],
+  "warnings": [
+    "Step 4.6 skipped - no replacement results from step 3"
+  ],
+  "file_states": {
+    "before": {
+      "main.tf": {
+        "exists": true,
+        "size": 2855,
+        "line_count": 117
+      },
+      "variables.tf": {
+        "exists": true,
+        "size": 1213,
+        "line_count": 53
+      },
+      "outputs.tf": {
+        "exists": true,
+        "size": 1161,
+        "line_count": 48
+      },
+      "terraform.tfvars": {
+        "exists": true,
+        "size": 428,
+        "line_count": 22
+      },
+      "registry": {
+        "total_resources": 0,
+        "resource_types": []
+      }
+    },
+    "after": {
+      "main.tf": {
+        "exists": true,
+        "size": 2855,
+        "line_count": 117
+      },
+      "variables.tf": {
+        "exists": true,
+        "size": 1213,
+        "line_count": 53
+      },
+      "outputs.tf": {
+        "exists": true,
+        "size": 1161,
+        "line_count": 48
+      },
+      "terraform.tfvars": {
+        "exists": true,
+        "size": 428,
+        "line_count": 22
+      },
+      "registry": {
+        "total_resources": 0,
+        "resource_types": []
+      }
+    }
+  }
+}

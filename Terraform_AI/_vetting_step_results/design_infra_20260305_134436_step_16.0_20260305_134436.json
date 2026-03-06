@@ -1,0 +1,66 @@
+{
+  "step_number": 16,
+  "step_name": "Module Normalization",
+  "success": true,
+  "timestamp": "2026-03-05T13:44:36.951532",
+  "changes": {
+    "skipped": true,
+    "reason": "TERRAFORM_USE_MODULES=false"
+  },
+  "errors": [],
+  "warnings": [],
+  "file_states": {
+    "before": {
+      "main.tf": {
+        "exists": true,
+        "size": 3155,
+        "line_count": 117
+      },
+      "variables.tf": {
+        "exists": true,
+        "size": 1213,
+        "line_count": 53
+      },
+      "outputs.tf": {
+        "exists": true,
+        "size": 1161,
+        "line_count": 48
+      },
+      "terraform.tfvars": {
+        "exists": true,
+        "size": 428,
+        "line_count": 22
+      },
+      "registry": {
+        "total_resources": 0,
+        "resource_types": []
+      }
+    },
+    "after": {
+      "main.tf": {
+        "exists": true,
+        "size": 3155,
+        "line_count": 117
+      },
+      "variables.tf": {
+        "exists": true,
+        "size": 1213,
+        "line_count": 53
+      },
+      "outputs.tf": {
+        "exists": true,
+        "size": 1161,
+        "line_count": 48
+      },
+      "terraform.tfvars": {
+        "exists": true,
+        "size": 428,
+        "line_count": 22
+      },
+      "registry": {
+        "total_resources": 0,
+        "resource_types": []
+      }
+    }
+  }
+}
