@@ -35,7 +35,9 @@ module "main_rg" {
 
   location = var.location
   name     = "project-rg"
+  tags     = { managed_by = "terraform-cicd-test" }
 }
+
 
 # Module: log_analytics (azurerm_log_analytics_workspace)
 module "log_analytics" {
