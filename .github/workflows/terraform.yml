@@ -47,6 +47,35 @@ jobs:
         echo "ARM_CLIENT_SECRET=${{ secrets.ARM_CLIENT_SECRET }}" >> $GITHUB_ENV
         echo "ARM_SUBSCRIPTION_ID=${{ secrets.ARM_SUBSCRIPTION_ID }}" >> $GITHUB_ENV
         echo "ARM_TENANT_ID=${{ secrets.ARM_TENANT_ID }}" >> $GITHUB_ENV
+        
+        # Pass required variables into Terraform using TF_VAR_ syntax
+        echo "TF_VAR_subscription_id=${{ secrets.ARM_SUBSCRIPTION_ID }}" >> $GITHUB_ENV
+        echo "TF_VAR_tenant_id=${{ secrets.ARM_TENANT_ID }}" >> $GITHUB_ENV
+        
+        # These are standard environment settings for the project:
+        echo "TF_VAR_environment=dev" >> $GITHUB_ENV
+        echo "TF_VAR_location=westus2" >> $GITHUB_ENV
+        echo "TF_VAR_backend_api_node_version=18-lts" >> $GITHUB_ENV
+        
+        # Complex objects are passed as JSON strings, but it is easier to just dynamically generate the .tfvars file
+        cat <<EOF > terraform.tfvars
+        environment = "dev"
+        subscription_id = "${{ secrets.ARM_SUBSCRIPTION_ID }}"
+        tenant_id = "${{ secrets.ARM_TENANT_ID }}"
+        location = "westus2"
+        backend_api_node_version = "18-lts"
+        consistency_policy = {
+          consistency_level = "Session"
+          max_interval_in_seconds = 5
+          max_staleness_prefix = 100
+        }
+        geo_location = [
+          {
+            failover_priority = 0
+            location = "westus2"
+          }
+        ]
+        EOF
 
     - name: Terraform Init
       id: init
