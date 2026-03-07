@@ -1,7 +1,6 @@
 # Node.js
 node_modules/
 npm-debug.log
-yarn-debug.log
 yarn-error.log
 
 # Python
@@ -9,23 +8,28 @@ __pycache__/
 *.py[cod]
 *.pyo
 *.pyd
-*.env
-.venv/
+.Python
 env/
 venv/
-*.egg-info/
-dist/
-build/
+ENV/
+env.bak/
+venv.bak/
+*.env
 
 # Docker
 *.dockerignore
 Dockerfile
-docker-compose*.yml
+docker-compose.yml
+
+# Build directories
+dist/
+build/
+out/
 
 # Logs
 *.log
 
-# IDEs and Editors
+# IDE and editor files
 .vscode/
 .idea/
 *.swp
@@ -36,26 +40,32 @@ docker-compose*.yml
 # OS-specific files
 .DS_Store
 Thumbs.db
-ehthumbs.db
-Icon?
-Desktop.ini
 
-# Frontend build artifacts
-build/
-dist/
-.cache/
-public/
+# Test results
+test_results/
+coverage/
+*.cover
+*.log
 
 # Miscellaneous
 *.tmp
 *.bak
 *.orig
-*.pid
-*.seed
-*.tgz
+*.class
+*.jar
+*.war
 *.zip
 *.tar
 *.gz
-*.rar
+*.tgz
 *.7z
-*.log.*
+*.rar
+
+# Frontend specific
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+frontend/.env
+frontend/.cache/
+frontend/.next/
+frontend/coverage/
