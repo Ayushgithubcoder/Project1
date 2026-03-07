@@ -1,2 +1,61 @@
-node_modules
-.env
+# Node.js
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.env
+.venv/
+env/
+venv/
+*.egg-info/
+dist/
+build/
+
+# Docker
+*.dockerignore
+Dockerfile
+docker-compose*.yml
+
+# Logs
+*.log
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*.sublime-workspace
+*.sublime-project
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Icon?
+Desktop.ini
+
+# Frontend build artifacts
+build/
+dist/
+.cache/
+public/
+
+# Miscellaneous
+*.tmp
+*.bak
+*.orig
+*.pid
+*.seed
+*.tgz
+*.zip
+*.tar
+*.gz
+*.rar
+*.7z
+*.log.*
