@@ -36,7 +36,7 @@ jobs:
     - name: Set Database Connection String
       run: |
         CONNECTION_STRING=$(az cosmosdb keys list --name project-cosmos-0ee8de --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --type connection-strings --query 'connectionStrings[0].connectionString' -o tsv)
-        echo "DATABASE_URL=$CONNECTION_STRING" >> .env
+        echo "MONGO_URI=$CONNECTION_STRING" >> .env
     - name: Set up Node.js
       uses: actions/setup-node@v4
       with:
@@ -71,7 +71,9 @@ jobs:
     - name: Install dependencies
       run: npm ci
     - name: Set Frontend API URL
-      run: echo "VITE_API_URL=https://project-backend-3e77da.azurewebsites.net" >> .env.production
+      run: |
+        BACKEND_URL=$(az webapp show --name project-backend-3e77da --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --query "defaultHostName" -o tsv)
+        echo "VITE_API_URL=https://$BACKEND_URL" >> .env.production
     - name: Build frontend
       run: npm run build
     - name: Get Static Web App Token

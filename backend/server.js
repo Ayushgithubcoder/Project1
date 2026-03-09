@@ -7,7 +7,29 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware
-app.use(cors());
+const allowedOrigins = [
+  "https://project-frontend.azurestaticapps.net",
+  "https://jolly-moss-0ce68b41e.4.azurestaticapps.net",
+  "http://localhost:5173",
+];
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      // allow requests with no origin (like mobile apps or curl requests)
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.indexOf(origin) === -1) {
+        return callback(
+          new Error(
+            "The CORS policy for this site does not allow access from the specified Origin."
+          ),
+          false
+        );
+      }
+      return callback(null, true);
+    },
+  })
+);
 app.use(express.json());
 
 // 1. Connect to MongoDB
