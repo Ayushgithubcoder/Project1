@@ -34,7 +34,9 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
     - name: Set Database Connection String
-      run: echo "DATABASE_URL=${{ secrets.AZURE_COSMOSDB_CONNECTION }}" >> .env
+      run: |
+        CONNECTION_STRING=$(az cosmosdb keys list --name project-cosmos-0ee8de --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --type connection-strings --query 'connectionStrings[0].connectionString' -o tsv)
+        echo "DATABASE_URL=$CONNECTION_STRING" >> .env
     - name: Set up Node.js
       uses: actions/setup-node@v4
       with:
@@ -45,9 +47,7 @@ jobs:
       uses: azure/webapps-deploy@v2
       with:
         app-name: project-backend-3e77da
-        slot-name: production
         package: .
-        publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE_BACKEND }}
     - name: Verify Backend Deployment
       run: curl -f https://project-backend-3e77da.azurewebsites.net/health || curl -f https://project-backend-3e77da.azurewebsites.net/api/health || curl -f https://project-backend-3e77da.azurewebsites.net || echo "Backend endpoint verification failed"
   deploy-frontend-project-frontend:
@@ -74,10 +74,15 @@ jobs:
       run: npm run build
     - name: Set Frontend API URL
       run: echo "API_URL=https://project-backend-3e77da.azurewebsites.net" >> .env.production
+    - name: Get Static Web App Token
+      id: get-token
+      run: |
+        TOKEN=$(az staticwebapp secrets list --name project-frontend --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --query "properties.apiKey" -o tsv)
+        echo "SWA_TOKEN=$TOKEN" >> $GITHUB_ENV
     - name: Deploy to Azure Static Web Apps
       uses: Azure/static-web-apps-deploy@v1
       with:
-        azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+        azure_static_web_apps_api_token: ${{ env.SWA_TOKEN }}
         repo_token: ${{ github.token }}
         action: upload
         app_location: frontend
