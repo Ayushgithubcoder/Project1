@@ -70,10 +70,10 @@ jobs:
         cache-dependency-path: frontend/package-lock.json
     - name: Install dependencies
       run: npm ci
+    - name: Set Frontend API URL
+      run: echo "VITE_API_URL=https://project-backend-3e77da.azurewebsites.net" >> .env.production
     - name: Build frontend
       run: npm run build
-    - name: Set Frontend API URL
-      run: echo "API_URL=https://project-backend-3e77da.azurewebsites.net" >> .env.production
     - name: Get Static Web App Token
       id: get-token
       run: |
