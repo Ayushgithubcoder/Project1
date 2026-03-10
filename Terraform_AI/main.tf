@@ -124,3 +124,5 @@ module "frontend_app_app" {
   sku_tier            = "Free"
   tags                = var.tags
 }
+
+# Triggering redeploy: 03/10/2026 09:00:37
